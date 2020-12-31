@@ -1,5 +1,4 @@
-Huntbot
-######
+# Huntbot
 
 A Discord bot that facilitates the solving of MIT Mystery Hunt.
 
