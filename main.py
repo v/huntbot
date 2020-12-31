@@ -1,7 +1,6 @@
 import discord
 import os
 import shlex
-from docopt import docopt
 from collections import namedtuple
 from tabulate import tabulate
 import re
