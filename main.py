@@ -72,6 +72,7 @@ async def on_message(message):
 
             # create channel and get id
             discord_chan = await message.guild.create_text_channel(channel, topic=topic)
+            voice_chan = await message.guild.create_voice_channel(channel)
 
             puz = Puzzle(
                 name=name,
