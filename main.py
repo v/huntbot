@@ -70,11 +70,12 @@ async def on_message(message):
 
             topic = """Discuss the puzzle **{}**. Sheet: {}""".format(name, link)
 
-            category = discord.utils.get(message.guild.categories, name='Puzzles')
+            text_category = discord.utils.get(message.guild.categories, name='Puzzles')
+            voice_category = discord.utils.get(message.guild.categories, name='Voice Channels')
 
             # create channel and get id
-            discord_chan = await message.guild.create_text_channel(channel, topic=topic, category=category)
-            voice_chan = await message.guild.create_voice_channel(channel, category=category)
+            discord_chan = await message.guild.create_text_channel(channel, topic=topic, category=text_category)
+            voice_chan = await message.guild.create_voice_channel(channel, category=voice_category)
 
             puz = Puzzle(
                 name=name,
