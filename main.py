@@ -14,6 +14,7 @@ huntbot_usage = """Huntbot
 
 Usage:
   huntbot start <name>...
+  huntbot finish <name>...
   huntbot list
   huntbot show <name>...
   huntbot (-h | --help)
@@ -90,6 +91,31 @@ async def on_message(message):
         await message.channel.send("""Puzzle **{}** started
 Visit channel <#{}>
 Solve using spreadsheet: {}""".format(puz.name, puz.channel_id, puz.sheet))
+        return
+
+    if command == 'finish':
+        if len(parts) < 3:
+            await message.channel.send(huntbot_usage)
+            return
+
+        name = ' '.join(parts[2:])
+        channel = '-'.join(parts[2:]).lower()
+
+        puz = Puzzle.get_or_none(Puzzle.name == channel)
+
+        if not puz:
+            await message.channel.send("""Puzzle **{}** not found""".format(puz.name))
+            return
+
+        finished_category = discord.utils.get(message.guild.categories, name='Finished')
+
+        await puz.channel.edit(category=finished_category)
+
+        voice_chan = discord.utils.get(message.guild.voice_channels, name=puz.channel)
+        if voice_chan is not None:
+            await voice_chan.delete()
+
+        await message.channel.send("""Puzzle **{}** marked finished""".format(puz.name))
         return
 
     if command == 'list':
