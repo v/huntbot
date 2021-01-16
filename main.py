@@ -101,15 +101,16 @@ Solve using spreadsheet: {}""".format(puz.name, puz.channel_id, puz.sheet))
         name = ' '.join(parts[2:])
         channel = '-'.join(parts[2:]).lower()
 
-        puz = Puzzle.get_or_none(Puzzle.name == channel)
+        puz = Puzzle.get_or_none(Puzzle.name == name)
 
         if not puz:
-            await message.channel.send("""Puzzle **{}** not found""".format(puz.name))
+            await message.channel.send("""Puzzle **{}** not found""".format(name))
             return
 
         finished_category = discord.utils.get(message.guild.categories, name='Finished')
 
-        await puz.channel.edit(category=finished_category)
+        text_chan = discord.utils.get(message.guild.text_channels, name=puz.channel)
+        await text_chan.edit(category=finished_category)
 
         voice_chan = discord.utils.get(message.guild.voice_channels, name=puz.channel)
         if voice_chan is not None:
