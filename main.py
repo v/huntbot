@@ -121,7 +121,7 @@ Solve using spreadsheet: {}""".format(puz.name, puz.channel_id, puz.sheet))
 
     if command == 'list':
         items = []
-        puzzles = Puzzle.select()
+        puzzles = Puzzle.select().where(Puzzle.completed_at == None)
         for puz in puzzles:
             items.append([puz.name, puz.channel, puz.sheet])
 

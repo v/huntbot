@@ -11,6 +11,7 @@ class Puzzle(Model):
 
     creator = TextField()
     created_at = DateTimeField(default=datetime.now)
+    completed_at = DateTimeField()
 
     class Meta:
         database = db
